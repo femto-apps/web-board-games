@@ -1,0 +1,25 @@
+extends components/base
+
+block head
+    script(src='/js/manageGames.bundle.js')
+
+block main
+    section
+        center
+            p
+                b Add / remove games from your collection.
+
+    section
+        form(action="/manage/search", method="GET")
+            input(type='text', name='query', placeholder='Enter Game Name')#boardgame
+            input(type="submit", value="Search & Add")
+
+        for thing in things
+            - const description = entities.decode(entities.decode(entities.decode(thing.description)))
+            - const trimmedDescription = description.length > 280 ? description.substring(0, 277) + '...' : description
+
+            h3= entities.decode(thing.name)
+            p= trimmedDescription
+            form(action="/manage/remove", method="POST")
+                input(type='hidden', name='game', value=thing.id)
+                input(type='submit', value='Remove from Library')

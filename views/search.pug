@@ -1,0 +1,22 @@
+extends components/base
+
+block head
+    script(src='/js/manageGames.bundle.js')
+
+block main
+    section
+        center
+            p
+                b List of games found for query "#[span= query]"
+
+    section
+        form(action="/manage/search", method="GET")
+            input(type='text', name='query', placeholder='Enter Game Name', value=query)#boardgame
+            input(type="submit", value="New Search")
+
+        for result in results
+            h3= entities.decode(result.name)
+            p= entities.decode(entities.decode(entities.decode(result.description)))
+            form(action="/manage/add", method="POST")
+                input(type='hidden', name='game', value=result.id)
+                input(type='submit', value='Add to Library')

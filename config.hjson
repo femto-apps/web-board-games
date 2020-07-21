@@ -1,0 +1,31 @@
+{
+    port: 3006
+    title: {
+        suffix: Femto Board Games
+    }
+    mongo: {
+        uri: mongodb://localhost:27017/
+        db: boardGames
+    }
+    session: {
+        secret: 3a8glh3al85tgh3a538hag3agha38g
+    }
+    redis: {
+        host: localhost
+        port: 6379
+    }
+    cookie: {
+        name: board-games
+        maxAge: 15552000000 // 1000 * 60 * 60 * 24 * 180 (6 months)
+    }
+    tokenService: {
+        endpoint: http://localhost:4500
+    }
+    authenticationProvider: {
+        endpoint: http://localhost:3001
+        consumerId: 19163656-3201-4d2c-b6f1-4a17d13f2ec6
+    }
+    authenticationConsumer: {
+        endpoint: http://localhost:3006
+    }
+}

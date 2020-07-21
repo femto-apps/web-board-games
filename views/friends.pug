@@ -1,0 +1,28 @@
+extends components/base
+
+block head
+    script(src='/js/manageGames.bundle.js')
+
+block main
+    section
+        center
+            p
+                b Here's a list of all your friends
+
+    section
+        if errors
+            for error in errors
+                blockquote= error
+
+        form(action="/friends/add", method="POST")
+            input(type='text', name='user', placeholder='Enter Friend Name', value=query)#friendname
+            input(type="submit", value="Add Friend")
+
+        for friend in friends
+            h3= friend.user.generic.username
+            form(action="/friends/remove", method="POST")
+                input(type='hidden', name='friend', value=friend.user.boardgame._id)
+                input(type='submit', value='Remove Friend')
+
+
+        

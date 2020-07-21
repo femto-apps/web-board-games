@@ -1,0 +1,53 @@
+extends components/base
+
+block head
+    script(src='/js/manageGames.bundle.js')
+    style.
+        select[multiple] {
+            height: auto;
+            background: none;
+        }
+
+block main
+    section
+        center
+            p
+                b What game are you playing?
+
+    section
+        if errors
+            for error in errors
+                blockquote= error
+
+        form(action="/play", method="GET")
+            label(for="player_count") Choose a player count
+            select(name="player_count")#player_count
+                option(value="1", selected=query.player_count=="1") 1
+                option(value="2", selected=query.player_count=="2") 2
+                option(value="3", selected=query.player_count=="3") 3
+                option(value="4", selected=query.player_count=="4") 4
+                option(value="5", selected=query.player_count=="5") 5
+            label(for="players") Whose playing?
+            select(name="players" multiple)#players
+                option(value=String(user.user.boardgame._id), selected=(query.players||[]).includes(String(user.user.boardgame._id)))= user.user.generic.username
+                for friend in friends
+                    option(value=String(friend.user.boardgame._id), selected=(query.players||[]).includes(String(friend.user.boardgame._id)))= friend.user.generic.username
+            label(for="minimum_playing_time") Minimum Playing Time
+            slider
+                input(type="range", value=query.minimum_playing_time||"0", min="0", max="600", name="minimum_playing_time")
+                counter 0
+            label(for="maximum_playing_time") Maximum Playing Time
+
+            slider
+                input(type="range", value=query.maximum_playing_time||"600", min="0", max="600", name="maximum_playing_time")
+                counter 600
+
+            input(type="submit", value="Find Games")
+
+        if games
+            for thing in games
+                - const description = entities.decode(entities.decode(entities.decode(thing.description)))
+                - const trimmedDescription = description.length > 560 ? description.substring(0, 557) + '...' : description
+
+                h3 #{entities.decode(thing.name)} (players: #{thing.minimum_players} - #{thing.maximum_players}, playtime: #{thing.minimum_playtime} - #{thing.maximum_playtime} mins)
+                p= trimmedDescription

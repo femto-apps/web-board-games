@@ -1,0 +1,32 @@
+extends components/base
+
+block main
+    section
+        center
+            p
+                b Find board games to play with your friends.
+
+    section
+        if !user
+            row
+                column
+                    center
+                        a(href=login)
+                            button Login / Signup
+
+        if user
+            row
+                column
+                    center
+                        a(href='/play')
+                            button Play a Game
+
+                column
+                    center
+                        a(href='/manage')
+                            button Manage Games
+
+                column
+                    center
+                        a(href='/friends')
+                            button Manage Friends
