@@ -225,6 +225,16 @@ async function searchAndEnrich(query) {
         return res.redirect('/friends')
     })
 
+    app.post('/friends/remove', async (req, res) => {
+        const user = req.body.user
+
+        const index = req.user.user.boardgame.friends.indexOf(user)
+        req.user.user.boardgame.friends.splice(index, 1)
+        await req.user.user.boardgame.save()
+
+        res.redirect('/friends')
+    })
+
     app.get('/play', async (req, res) => {
         const friends = await Promise.all(req.user.user.boardgame.friends.map(id => User.fromBoardGameId(id)))
 

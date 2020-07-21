@@ -27,6 +27,13 @@ block main
                 option(value="3", selected=query.player_count=="3") 3
                 option(value="4", selected=query.player_count=="4") 4
                 option(value="5", selected=query.player_count=="5") 5
+                option(value="6", selected=query.player_count=="6") 6
+                option(value="7", selected=query.player_count=="7") 7
+                option(value="8", selected=query.player_count=="8") 8
+                option(value="9", selected=query.player_count=="9") 9
+                option(value="10", selected=query.player_count=="10") 10
+                option(value="11", selected=query.player_count=="11") 11
+                option(value="12", selected=query.player_count=="12") 12
             label(for="players") Whose playing?
             select(name="players" multiple)#players
                 option(value=String(user.user.boardgame._id), selected=(query.players||[]).includes(String(user.user.boardgame._id)))= user.user.generic.username
@@ -34,12 +41,12 @@ block main
                     option(value=String(friend.user.boardgame._id), selected=(query.players||[]).includes(String(friend.user.boardgame._id)))= friend.user.generic.username
             label(for="minimum_playing_time") Minimum Playing Time
             slider
-                input(type="range", value=query.minimum_playing_time||"0", min="0", max="600", name="minimum_playing_time")
+                input(type="range", value=query.minimum_playing_time||"0", min="0", max="300", name="minimum_playing_time")
                 counter 0
             label(for="maximum_playing_time") Maximum Playing Time
 
             slider
-                input(type="range", value=query.maximum_playing_time||"600", min="0", max="600", name="maximum_playing_time")
+                input(type="range", value=query.maximum_playing_time||"300", min="0", max="300", name="maximum_playing_time")
                 counter 600
 
             input(type="submit", value="Find Games")
