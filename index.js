@@ -12,6 +12,7 @@ const redis = require('redis')
 const Entities = require('html-entities').AllHtmlEntities
 const _ = require('lodash')
 const flash = require('connect-flash')
+const flat = require('array-flat-polyfill')
 const authenticationConsumer = require('@femto-apps/authentication-consumer')
 
 const Thing = require('./modules/Thing')

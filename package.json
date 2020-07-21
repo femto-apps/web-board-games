@@ -12,6 +12,7 @@
   "dependencies": {
     "@femto-apps/authentication-consumer": "^1.0.1",
     "@femto-apps/config": "^3.0.1",
+    "array-flat-polyfill": "^1.0.1",
     "bgg": "^1.0.1",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
