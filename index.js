@@ -16,7 +16,6 @@ const authenticationConsumer = require('@femto-apps/authentication-consumer')
 
 const Thing = require('./modules/Thing')
 const User = require('./modules/User')
-const { array } = require('yargs')
 const bgg = new (require('./modules/BGG'))()
 bgg.gameMemo = memoize(bgg.game)
 
