@@ -225,7 +225,7 @@ async function searchAndEnrich(query) {
     })
 
     app.post('/friends/remove', async (req, res) => {
-        const user = req.body.user
+        const user = req.body.friend
 
         const index = req.user.user.boardgame.friends.indexOf(user)
         req.user.user.boardgame.friends.splice(index, 1)
