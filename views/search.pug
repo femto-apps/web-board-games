@@ -14,9 +14,31 @@ block main
             input(type='text', name='query', placeholder='Enter Game Name', value=query)#boardgame
             input(type="submit", value="New Search")
 
-        for result in results
-            h3= entities.decode(result.name)
-            p= entities.decode(entities.decode(entities.decode(result.description)))
-            form(action="/manage/add", method="POST")
-                input(type='hidden', name='game', value=result.id)
-                input(type='submit', value='Add to Library')
+        table
+            thead
+                tr
+                    th
+                    th Game
+                    th
+            tbody
+                for thing in results
+                    - const description = thing.description.length > 280 ? thing.description.substring(0, 277) + '...' : thing.description
+                    tr
+                        td
+                            img(src=thing.thumbnail)
+                        td
+                            p.no-bottom #{thing.name} (#{thing.year_published})
+                        td
+                            form(action="/manage/add", method="POST").no-bottom
+                                input(type='hidden', name='game', value=thing.id)
+                                input(type='submit', value='Add to Library').no-bottom.hyperlink
+
+        //- for thing in results
+        //-     p= JSON.stringify(thing)
+
+        //- for result in results
+        //-     h3= entities.decode(result.name)
+        //-     p= entities.decode(entities.decode(entities.decode(result.description)))
+        //-     form(action="/manage/add", method="POST")
+        //-         input(type='hidden', name='game', value=result.id)
+        //-         input(type='submit', value='Add to Library')

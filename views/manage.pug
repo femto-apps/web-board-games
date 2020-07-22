@@ -14,12 +14,21 @@ block main
             input(type='text', name='query', placeholder='Enter Game Name')#boardgame
             input(type="submit", value="Search & Add")
 
-        for thing in things
-            - const description = entities.decode(entities.decode(entities.decode(thing.description)))
-            - const trimmedDescription = description.length > 280 ? description.substring(0, 277) + '...' : description
-
-            h3= entities.decode(thing.name)
-            p= trimmedDescription
-            form(action="/manage/remove", method="POST")
-                input(type='hidden', name='game', value=thing.id)
-                input(type='submit', value='Remove from Library')
+        table
+            thead
+                tr
+                    th Game
+                    th Rating
+                    th
+            tbody
+                for thing in things
+                    - const description = thing.description.length > 280 ? thing.description.substring(0, 277) + '...' : thing.description
+                    tr
+                        td
+                            p.no-bottom #{thing.name} (#{thing.year_published})
+                        td
+                            p.no-bottom #{thing.rating}
+                        td
+                            form(action="/manage/remove", method="POST").no-bottom
+                                input(type='hidden', name='game', value=thing.id)
+                                input(type='submit', value='Remove').no-bottom.hyperlink

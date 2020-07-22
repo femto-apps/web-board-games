@@ -34,7 +34,7 @@ function parseGame(game) {
 async function searchAndEnrich(query) {
     const result = await bgg.search(query, ['boardgame'])
 
-    if (result.items.total === 0) {
+    if (result.items.length === 0) {
         return { results: [] }
     }
 
@@ -50,6 +50,24 @@ async function searchAndEnrich(query) {
     }
 
     const basicInfo = searchResults.map(parseGame)
+
+    return { results: basicInfo }
+}
+
+async function betterSearchAndEnrich(query) {
+    const result = await bgg.bggSearch(query)
+
+    const limit = pLimit(5)
+
+    const searchResults = await Promise.all(
+        result.items
+            .map(i => i.id)
+            .map(id => limit(() => bgg.gameMemo(id)))
+    )
+
+    const basicInfo = searchResults
+        .map(item => new Thing(item.items.item))
+        .map(thing => thing.simple())
 
     return { results: basicInfo }
 }
@@ -135,7 +153,7 @@ async function searchAndEnrich(query) {
     })
 
     app.get('/', (req, res) => {
-        console.log(req.user)
+        // console.log(req.user)
         res.render('home', {
             page: { title: `Home :: ${config.get('title.suffix')}` },
             login: res.locals.auth.getLogin(`${req.protocol}://${req.get('host')}${req.originalUrl}`)
@@ -168,7 +186,7 @@ async function searchAndEnrich(query) {
     })
 
     app.get('/manage/search', async (req, res) => {
-        const { results } = await searchAndEnrich(req.query.query)
+        const { results } = await betterSearchAndEnrich(req.query.query)
 
         res.render('search', {
             page: { title: `Search :: ${config.get('title.suffix')}` },
