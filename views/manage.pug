@@ -22,10 +22,9 @@ block main
                     th
             tbody
                 for thing in things
-                    - const description = thing.description.length > 280 ? thing.description.substring(0, 277) + '...' : thing.description
                     tr
                         td
-                            p.no-bottom #{thing.name} (#{thing.year_published})
+                            p.no-bottom #[a(href=`/game/${thing.id}`)= thing.name] (#{thing.year_published})
                         td
                             p.no-bottom #{thing.rating}
                         td

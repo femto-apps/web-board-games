@@ -56,5 +56,5 @@ block main
                 - const description = entities.decode(entities.decode(entities.decode(thing.description)))
                 - const trimmedDescription = description.length > 560 ? description.substring(0, 557) + '...' : description
 
-                h3 #{entities.decode(thing.name)} (players: #{thing.minimum_players} - #{thing.maximum_players}, playtime: #{thing.minimum_playtime} - #{thing.maximum_playtime} mins)
+                h3 #[a(href=`/game/${thing.id}`)= thing.name] (players: #{thing.minimum_players} - #{thing.maximum_players}, playtime: #{thing.minimum_playtime} - #{thing.maximum_playtime} mins)
                 p= trimmedDescription

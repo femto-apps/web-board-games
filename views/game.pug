@@ -1,0 +1,16 @@
+extends components/base
+
+block head
+    script(src='/js/manageGames.bundle.js')
+
+block main
+    section
+        div(style='float:left')
+            img(src=game.thumbnail)
+
+        div(style='float:right')
+            h3= game.name
+            p(style="white-space: pre-line")= game.description
+
+    section
+        p= JSON.stringify(game)

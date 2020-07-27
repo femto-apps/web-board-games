@@ -17,6 +17,7 @@ const authenticationConsumer = require('@femto-apps/authentication-consumer')
 
 const Thing = require('./modules/Thing')
 const User = require('./modules/User')
+const { removeListener } = require('./models/User')
 const bgg = new (require('./modules/BGG'))()
 bgg.gameMemo = memoize(bgg.game)
 
@@ -251,6 +252,16 @@ async function betterSearchAndEnrich(query) {
         await req.user.user.boardgame.save()
 
         res.redirect('/friends')
+    })
+
+    app.get('/game/:id', async (req, res) => {
+        const game = new Thing((await bgg.gameMemo(req.params.id)).items.item)
+        const simple = game.simple()
+
+        res.render('game', {
+            page: { title: `${simple.name} :: ${config.get('title.suffix')}` },
+            game: simple
+        })
     })
 
     app.get('/play', async (req, res) => {
